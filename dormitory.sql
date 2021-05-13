@@ -7,7 +7,8 @@ CREATE TABLE `user` (
   `password`     VARCHAR(50) NOT NULL,
   `phone_number` VARCHAR(20)  DEFAULT NULL,
   `create_time`  TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP(6),
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY (`username`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = `utf8mb4`
   COLLATE `utf8mb4_bin`;

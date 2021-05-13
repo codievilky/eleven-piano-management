@@ -21,4 +21,9 @@ public class TestController {
   public List<User> hello() {
     return userService.listAllUser();
   }
+
+  @GetMapping(value = "/api/hello")
+  public List<User> error() {
+    throw new RuntimeException("我错了");
+  }
 }

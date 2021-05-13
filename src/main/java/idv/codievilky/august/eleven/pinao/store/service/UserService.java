@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @auther Codievilky August
@@ -19,5 +20,9 @@ public class UserService {
 
   public List<User> listAllUser() {
     return Lists.newArrayList(userRepository.findAll());
+  }
+
+  public Optional<User> getUserByName(String username) {
+    return userRepository.findUserByName(username);
   }
 }
