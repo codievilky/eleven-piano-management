@@ -1,4 +1,4 @@
-package idv.codievilky.august.eleven.pinao.server;
+package idv.codievilky.august.eleven.pinao.controller;
 
 import idv.codievilky.august.eleven.pinao.request.LoginInfo;
 import org.apache.shiro.SecurityUtils;

@@ -1,5 +1,7 @@
 package idv.codievilky.august.eleven.pinao.server;
 
+import com.mchange.v2.c3p0.AbstractComboPooledDataSource;
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 import idv.codievilky.august.eleven.pinao.shiro.LoginRealm;
 import org.apache.shiro.spring.config.web.autoconfigure.ShiroWebFilterConfiguration;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -9,9 +11,15 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+
+import javax.sql.DataSource;
 
 /**
  * @auther Codievilky August
@@ -28,13 +36,14 @@ import org.springframework.stereotype.Service;
     },
     lazyInit = true
 )
+@EnableJdbcRepositories("idv.codievilky.august.eleven.pinao.store.repository")
 public class SpringStartConfiguration extends ShiroWebFilterConfiguration {
   @Bean
   public ShiroFilterChainDefinition shiroFilterChainDefinition() {
     DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
     chainDefinition.addPathDefinition("/login.html", "authc"); // need to accept POSTs from the login form
     chainDefinition.addPathDefinition("/logout", "logout");
-    chainDefinition.addPathDefinition("/hello", "authc");
+    chainDefinition.addPathDefinition("/**", "anon");
     return chainDefinition;
   }
 
@@ -52,4 +61,28 @@ public class SpringStartConfiguration extends ShiroWebFilterConfiguration {
     return manager;
   }
 
+  @Bean
+  @Lazy
+  DataSource getDataSource() {
+    AbstractComboPooledDataSource dataSource = new ComboPooledDataSource();
+    dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/eleven?useUnicode=true&characterEncoding=utf-8");
+    dataSource.setUser("eleven");
+    dataSource.setPassword("981127");
+    dataSource.setInitialPoolSize(1);
+    dataSource.setMinPoolSize(1);
+    dataSource.setMaxPoolSize(10);
+    dataSource.setAcquireIncrement(1);
+    dataSource.setMaxIdleTime(600);
+    dataSource.setAcquireRetryAttempts(3);
+    dataSource.setCheckoutTimeout(10000);
+    dataSource.setPreferredTestQuery("SELECT 1");
+    dataSource.setIdleConnectionTestPeriod(60);
+    return dataSource;
+  }
+
+  @Bean
+  @Lazy
+  NamedParameterJdbcOperations namedParameterJdbcOperations(DataSource dataSource) {
+    return new NamedParameterJdbcTemplate(dataSource);
+  }
 }
