@@ -12,12 +12,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.core.Ordered;
 import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.sql.DataSource;
 
@@ -37,7 +40,7 @@ import javax.sql.DataSource;
     lazyInit = true
 )
 @EnableJdbcRepositories("idv.codievilky.august.eleven.pinao.store.repository")
-public class SpringStartConfiguration extends ShiroWebFilterConfiguration {
+public class SpringStartConfiguration extends ShiroWebFilterConfiguration implements WebMvcConfigurer {
   @Bean
   public ShiroFilterChainDefinition shiroFilterChainDefinition() {
     DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
@@ -59,6 +62,12 @@ public class SpringStartConfiguration extends ShiroWebFilterConfiguration {
     DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
     manager.setRealm(realm);
     return manager;
+  }
+
+  @Override
+  public void addViewControllers(ViewControllerRegistry registry) {
+    registry.addViewController("/").setViewName("forward:/index.html");
+    registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
   }
 
   @Bean

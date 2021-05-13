@@ -29,6 +29,8 @@ public class PianoApplication extends SpringBootServletInitializer {
     return builder.sources(PianoApplication.class);
   }
 
+
+
   public static void main(String[] args) {
     PianoApplication.applicationContext = SpringApplication.run(PianoApplication.class, args);
   }
