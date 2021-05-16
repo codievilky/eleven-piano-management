@@ -13,7 +13,7 @@ import java.util.Optional;
  * @since 2021/5/13
  */
 @Repository
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository extends CrudRepository<User, Long> , UserCustomizedRepository {
   @Query("SELECT * FROM user WHERE username = :username")
   Optional<User> findUserByName(@Param("username") String username);
 }

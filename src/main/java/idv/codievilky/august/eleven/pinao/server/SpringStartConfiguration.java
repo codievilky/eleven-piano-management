@@ -19,6 +19,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -94,4 +96,10 @@ public class SpringStartConfiguration extends ShiroWebFilterConfiguration implem
   NamedParameterJdbcOperations namedParameterJdbcOperations(DataSource dataSource) {
     return new NamedParameterJdbcTemplate(dataSource);
   }
+
+  @Override
+  public void configurePathMatch(PathMatchConfigurer configurer) {
+    configurer.addPathPrefix("/api", c -> c.isAnnotationPresent(RestController.class));
+  }
+
 }

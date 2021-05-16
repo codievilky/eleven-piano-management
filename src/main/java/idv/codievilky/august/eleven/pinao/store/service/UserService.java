@@ -2,7 +2,7 @@ package idv.codievilky.august.eleven.pinao.store.service;
 
 import com.google.common.collect.Lists;
 import idv.codievilky.august.eleven.pinao.store.model.User;
-import idv.codievilky.august.eleven.pinao.store.repository.UserRepository;
+import idv.codievilky.august.eleven.pinao.store.repository.UserCustomizedRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ import java.util.Optional;
 @Service
 public class UserService {
   @Autowired
-  private UserRepository userRepository;
+  private UserCustomizedRepository userRepository;
 
   public List<User> listAllUser() {
     return Lists.newArrayList(userRepository.findAll());

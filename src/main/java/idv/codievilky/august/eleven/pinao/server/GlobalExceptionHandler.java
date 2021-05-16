@@ -1,6 +1,7 @@
 package idv.codievilky.august.eleven.pinao.server;
 
 import com.google.common.collect.Maps;
+import idv.codievilky.august.eleven.pinao.common.exception.HttpResponseException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -21,6 +22,12 @@ public class GlobalExceptionHandler {
     log.warn("request handled failed with exception:", exception);
     Map<String, String> result = Maps.newHashMap();
     result.put("error", exception.getLocalizedMessage());
-    return ResponseEntity.status(400).body(result);
+    int responseCode;
+    if (exception instanceof HttpResponseException) {
+      responseCode = ((HttpResponseException) exception).getHttpResponseCode();
+    } else {
+      responseCode = 500;
+    }
+    return ResponseEntity.status(responseCode).body(result);
   }
 }
