@@ -1,5 +1,6 @@
 package idv.codievilky.august.eleven.pinao.controller;
 
+import idv.codievilky.august.eleven.pinao.common.ApiController;
 import idv.codievilky.august.eleven.pinao.common.exception.BadRequestException;
 import idv.codievilky.august.eleven.pinao.common.exception.NotFoundException;
 import idv.codievilky.august.eleven.pinao.store.model.User;
@@ -9,7 +10,6 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
@@ -17,7 +17,7 @@ import java.util.Optional;
  * @auther Codievilky August
  * @since 2021/5/16
  */
-@RestController
+@ApiController
 public class UserController {
   @Autowired
   private UserService userService;
@@ -30,7 +30,7 @@ public class UserController {
     if (!user.getUsername().equals(subject.getPrincipal())) {
       throw new BadRequestException("只能修改自己的用户属性");
     }
-    userService.
+    return null;
   }
 
 }

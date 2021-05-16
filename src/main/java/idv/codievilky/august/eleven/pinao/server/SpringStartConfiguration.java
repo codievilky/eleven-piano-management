@@ -2,6 +2,7 @@ package idv.codievilky.august.eleven.pinao.server;
 
 import com.mchange.v2.c3p0.AbstractComboPooledDataSource;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import idv.codievilky.august.eleven.pinao.common.ApiController;
 import idv.codievilky.august.eleven.pinao.shiro.LoginRealm;
 import org.apache.shiro.spring.config.web.autoconfigure.ShiroWebFilterConfiguration;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -19,7 +20,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -99,7 +99,7 @@ public class SpringStartConfiguration extends ShiroWebFilterConfiguration implem
 
   @Override
   public void configurePathMatch(PathMatchConfigurer configurer) {
-    configurer.addPathPrefix("/api", c -> c.isAnnotationPresent(RestController.class));
+    configurer.addPathPrefix("/api", c -> c.isAnnotationPresent(ApiController.class));
   }
 
 }

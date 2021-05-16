@@ -9,7 +9,7 @@ import idv.codievilky.august.eleven.pinao.store.model.User;
 public interface UserCustomizedRepository {
   int update(User user);
 
-  class CustomizedUserRepositoryImpl extends BaseCustomizedRepository implements UserCustomizedRepository {
+  class UserCustomizedRepositoryImpl extends BaseCustomizedRepository implements UserCustomizedRepository {
     @Override
     public int update(User user) {
       return updateEntityNotNullFieldsById(user);
